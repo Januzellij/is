@@ -31,8 +31,11 @@ func Zero(val interface{}) (bool, error) {
 	case reflect.Struct:
 		numberOfFields := value.NumField()
 		for i := 0; i < numberOfFields; i++ {
-			if !Zero(value.Field(i).Interface()) {
-				return false, nil
+			if zero, err := Zero(value.Field(i).Interface()); !zero {
+				// this handles multiple cases
+				// 1) err != nil: then we return false (since zero is false) and the error correctly
+				// 2) zero == false && err == nil: we return false and a (correctly) nil error
+				return zero, err
 			}
 		}
 		return true, nil
