@@ -1,0 +1,1 @@
+See <a href="http://godoc.org/github.com/Januzellij/is">docs</a>.
